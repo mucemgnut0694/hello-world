@@ -1,9 +1,12 @@
 package com.barry.allen;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Scanner;
+
 import javax.xml.bind.DatatypeConverter;;
 
 public class Main {
@@ -58,15 +61,17 @@ public class Main {
 	    return DatatypeConverter.parseHexBinary(s);
 	}
 	
-	public static void main(String[] args) {
-		try{
-			String hex = binaryFileToHexString("u1603.exe");
-			hexStringToStringFile("ultra.txt", hex);
-			hexStringToExeFile("ultra.exe", hex);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+	public static String fileToHexString(String path)throws FileNotFoundException{
+		File file = new File(path);
+		Scanner scanner = new Scanner(file);
+		String content = scanner.useDelimiter("\\Z").next();
+		scanner.close();
+	    return content;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		String hexString = fileToHexString("ultradl.txt");
+		hexStringToExeFile("ul2.exe", hexString);
 	}
 
 }
